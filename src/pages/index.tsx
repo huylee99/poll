@@ -1,12 +1,42 @@
 import type { NextPage } from "next";
+import { useRef } from "react";
 import Head from "next/head";
-import { GetServerSideProps } from "next";
-import { prisma } from "../db/client";
 
 import { trpc } from "../utils/trpc";
 
-const Home: NextPage<{ poll: string }> = ({ poll }) => {
-  const { data, isLoading } = trpc.useQuery(["hello", { text: "client" }]);
+const QuestionCreator = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const client = trpc.useContext();
+
+  const { mutate, isLoading } = trpc.useMutation("poll.create", {
+    onSuccess: () => {
+      client.invalidateQueries(["poll.get-all"]);
+
+      if (inputRef.current) {
+        inputRef.current.value = "";
+      }
+    },
+  });
+
+  return (
+    <>
+      <form
+        onSubmit={event => {
+          event.preventDefault();
+          mutate({ question: inputRef?.current?.value! });
+        }}
+      >
+        <input disabled={isLoading} ref={inputRef} type="text" className="w-full" />
+        <button disabled={isLoading} type="submit">
+          Submit
+        </button>
+      </form>
+    </>
+  );
+};
+
+const Home: NextPage = () => {
+  const { data, isLoading } = trpc.useQuery(["poll.get-all"]);
 
   return (
     <div>
@@ -16,15 +46,11 @@ const Home: NextPage<{ poll: string }> = ({ poll }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>{!isLoading ? data?.greeting : null}</h1>
+        <h1>{!isLoading ? JSON.stringify(data?.polls) : null}</h1>
+        <QuestionCreator />
       </main>
     </div>
   );
 };
 
 export default Home;
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-//   const poll = await prisma.poll.findMany();
-//   return { props: { poll: JSON.stringify(poll) } };
-// };
