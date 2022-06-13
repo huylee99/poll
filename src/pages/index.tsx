@@ -3,7 +3,11 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import { prisma } from "../db/client";
 
+import { trpc } from "../utils/trpc";
+
 const Home: NextPage<{ poll: string }> = ({ poll }) => {
+  const { data, isLoading } = trpc.useQuery(["hello", { text: "client" }]);
+
   return (
     <div>
       <Head>
@@ -12,7 +16,7 @@ const Home: NextPage<{ poll: string }> = ({ poll }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>{poll}</h1>
+        <h1>{!isLoading ? data?.greeting : null}</h1>
       </main>
     </div>
   );
@@ -20,7 +24,7 @@ const Home: NextPage<{ poll: string }> = ({ poll }) => {
 
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const poll = await prisma.poll.findMany();
-  return { props: { poll: JSON.stringify(poll) } };
-};
+// export const getServerSideProps: GetServerSideProps = async () => {
+//   const poll = await prisma.poll.findMany();
+//   return { props: { poll: JSON.stringify(poll) } };
+// };
