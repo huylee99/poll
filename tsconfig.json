@@ -16,6 +16,7 @@
     "noImplicitAny": true,
     "noImplicitReturns": true,
     "incremental": true,
+    "noUncheckedIndexedAccess": true,
     "baseUrl": ".",
     "paths": {
       "@components/*": ["src/components/*"],

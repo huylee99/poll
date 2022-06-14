@@ -14,4 +14,13 @@ model Poll {
   createdAt DateTime  @default(now())
   endsAt    DateTime?
   question  String    @db.VarChar(5000)
+  vote      Vote[]
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  choice    Int
+  poll      Poll     @relation(fields: [pollId], references: [id])
+  pollId    String
 }

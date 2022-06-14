@@ -27,7 +27,7 @@ const QuestionCreator = () => {
           mutate({ question: inputRef?.current?.value! });
         }}
       >
-        <input disabled={isLoading} ref={inputRef} type="text" className="w-full" />
+        <input aria-label="aa" disabled={isLoading} ref={inputRef} type="text" className="w-full" />
         <button disabled={isLoading} type="submit">
           Submit
         </button>
