@@ -11,7 +11,12 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
     return <div>Loading...</div>;
   }
 
-  return <div>{data?.question}</div>;
+  return (
+    <>
+      <div>{data?.question}</div>
+      {data.isOwner ? <div className="text-red-500">You owned this</div> : null}
+    </>
+  );
 };
 
 export default PollContent;

@@ -14,6 +14,7 @@ model Poll {
   createdAt DateTime  @default(now())
   endsAt    DateTime?
   question  String    @db.VarChar(5000)
+  owner     String    @db.VarChar(255)
   vote      Vote[]
 }
 

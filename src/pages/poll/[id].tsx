@@ -3,16 +3,16 @@ import PollContent from "@components/PollContent";
 import { useEffect } from "react";
 
 const Poll = () => {
-  const { query, push } = useRouter();
+  const { query, push, isReady } = useRouter();
   const { id } = query;
 
   useEffect(() => {
-    if (!id) {
+    if (isReady && !id) {
       push("/");
     }
-  }, [id, push]);
+  }, [id, isReady, push]);
 
-  return <PollContent id={id as string} />;
+  return <div>{id ? <PollContent id={id as string} /> : null}</div>;
 };
 
 export default Poll;
