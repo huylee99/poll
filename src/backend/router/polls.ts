@@ -23,4 +23,18 @@ export const pollRouter = trpc
 
       return poll;
     },
+  })
+  .query("get-by-id", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ input }) {
+      const poll = await prisma.poll.findUnique({
+        where: {
+          id: input.id,
+        },
+      });
+
+      return poll;
+    },
   });

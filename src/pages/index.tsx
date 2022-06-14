@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import { useRef } from "react";
 import Head from "next/head";
+import Link from "next/link";
 
 import { trpc } from "../utils/trpc";
 
@@ -46,7 +47,15 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>{!isLoading ? JSON.stringify(data?.polls) : null}</h1>
+        <h1>
+          {!isLoading
+            ? data?.polls.map(poll => (
+                <Link passHref href={`/poll/${poll.id}`} key={poll.id}>
+                  <a className="text-lg p-2 inline-block font-medium">{poll.question}</a>
+                </Link>
+              ))
+            : null}
+        </h1>
         <QuestionCreator />
       </main>
     </div>
