@@ -1,42 +1,10 @@
 import type { NextPage } from "next";
-import { useRef } from "react";
+
 import Head from "next/head";
 import Link from "next/link";
 import PollCard from "@components/PollCard";
 import PageTitle from "@components/PageTitle";
-
 import { trpc } from "../utils/trpc";
-
-const QuestionCreator = () => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  const client = trpc.useContext();
-
-  const { mutate, isLoading } = trpc.useMutation("poll.create", {
-    onSuccess: () => {
-      client.invalidateQueries(["poll.get-all"]);
-
-      if (inputRef.current) {
-        inputRef.current.value = "";
-      }
-    },
-  });
-
-  return (
-    <>
-      <form
-        onSubmit={event => {
-          event.preventDefault();
-          mutate({ question: inputRef?.current?.value! });
-        }}
-      >
-        <input aria-label="aa" disabled={isLoading} ref={inputRef} type="text" className="w-full" />
-        <button disabled={isLoading} type="submit">
-          Submit
-        </button>
-      </form>
-    </>
-  );
-};
 
 const Home: NextPage = () => {
   const { data, isLoading } = trpc.useQuery(["poll.get-all"]);
