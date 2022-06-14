@@ -1,4 +1,3 @@
-import * as trpc from "@trpc/server";
 import { prisma } from "@db/client";
 import * as z from "zod";
 import { createRouter } from "@backend/context";
@@ -15,10 +14,12 @@ export const pollRouter = createRouter()
       question: z.string().min(5),
     }),
     async resolve({ input, ctx }) {
+      if (!ctx.token) return { message: "Unauthorized" };
+
       const poll = await prisma.poll.create({
         data: {
           question: input.question,
-          owner: ctx.token as string,
+          ownerToken: ctx.token,
         },
       });
 
@@ -36,6 +37,6 @@ export const pollRouter = createRouter()
         },
       });
 
-      return { ...poll, isOwner: ctx.token === poll?.owner };
+      return { ...poll, isOwner: ctx.token === poll?.ownerToken };
     },
   });

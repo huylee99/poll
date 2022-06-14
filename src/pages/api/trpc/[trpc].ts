@@ -1,8 +1,9 @@
+import { createContext } from "@backend/context";
 import { appRouter } from "@backend/router";
 import * as trpcNext from "@trpc/server/adapters/next";
 
 // export API handler
 export default trpcNext.createNextApiHandler({
   router: appRouter,
-  createContext: ctx => ({ token: ctx.req.cookies["poll-user-token"] }),
+  createContext: createContext,
 });
