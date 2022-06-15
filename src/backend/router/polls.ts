@@ -19,6 +19,7 @@ export const pollRouter = createRouter()
         data: {
           question: input.question,
           ownerToken: ctx.token,
+          options: input.options,
         },
       });
 
