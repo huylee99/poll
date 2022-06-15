@@ -1,6 +1,7 @@
 import { prisma } from "@db/client";
 import * as z from "zod";
 import { createRouter } from "@backend/context";
+import createPollValidator from "src/shared/createPollValidator";
 
 export const pollRouter = createRouter()
   .query("get-all", {
@@ -10,9 +11,7 @@ export const pollRouter = createRouter()
     },
   })
   .mutation("create", {
-    input: z.object({
-      question: z.string().min(5),
-    }),
+    input: createPollValidator,
     async resolve({ input, ctx }) {
       if (!ctx.token) return { message: "Unauthorized" };
 
