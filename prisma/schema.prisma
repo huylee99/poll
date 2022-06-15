@@ -15,6 +15,7 @@ model Poll {
   endsAt     DateTime?
   question   String    @db.VarChar(5000)
   ownerToken String    @db.VarChar(255)
+  options    Json
   vote       Vote[]
 
   @@index([ownerToken])
@@ -26,4 +27,6 @@ model Vote {
   choice    Int
   poll      Poll     @relation(fields: [pollId], references: [id])
   pollId    String
+
+  @@unique([pollId])
 }
