@@ -1,5 +1,5 @@
 import type { createVoteFieldType } from "@shared/createVoteValidator";
-
+import { ChartBarIcon, ShareIcon } from "@heroicons/react/solid";
 import { trpc } from "@utils/trpc";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,14 +51,38 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
               );
             })}
           </div>
-
           {data.isVoted ? (
             <div className="py-4 px-5 my-6 bg-red-900 bg-opacity-60 text-red-100 text-sm rounded-md">
               {"You already voted on this poll."}
             </div>
           ) : null}
-          <div>
-            <button type="submit">Submit</button>
+          <div className="flex items-center -mx-2">
+            <div className="flex-1 mx-2">
+              <button
+                type="submit"
+                className="text-center w-full font-medium bg-pink-800 text-slate-200 py-3 rounded-md text-sm hover:bg-pink-700 transition-all"
+              >
+                Vote
+              </button>
+            </div>
+            <div className="flex-1 flex items-center">
+              <div className="flex-1 mx-2">
+                <button
+                  type="button"
+                  className="w-full text-sm flex rounded-md items-center justify-center bg-slate-700 py-3 text-slate-200 hover:bg-slate-600 transition-all"
+                >
+                  <ChartBarIcon className="w-5 h-5 text-slate-300 mr-2" /> Results
+                </button>
+              </div>
+              <div className="flex-1 mx-2">
+                <button
+                  type="button"
+                  className="w-full text-sm rounded-md flex items-center justify-center bg-slate-700 py-3 text-slate-200 hover:bg-slate-600 transition-all"
+                >
+                  <ShareIcon className="w-5 h-5 text-slate-300 mr-2" /> Share
+                </button>
+              </div>
+            </div>
           </div>
         </form>
       </div>
