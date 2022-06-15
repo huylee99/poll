@@ -22,11 +22,12 @@ model Poll {
 }
 
 model Vote {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  choice    Int
-  poll      Poll     @relation(fields: [pollId], references: [id])
-  pollId    String
+  id         String   @id @default(cuid())
+  createdAt  DateTime @default(now())
+  choice     Int
+  poll       Poll     @relation(fields: [pollId], references: [id])
+  pollId     String
+  voterToken String   @db.VarChar(255)
 
   @@unique([pollId])
 }

@@ -23,7 +23,8 @@
       "@utils/*": ["src/utils/*"],
       "@pages/*": ["src/pages/*"],
       "@db/*": ["src/db/*"],
-      "@backend/*": ["src/backend/*"]
+      "@backend/*": ["src/backend/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
