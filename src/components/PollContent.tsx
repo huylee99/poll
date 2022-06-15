@@ -7,7 +7,9 @@ import { createVoteFieldValue } from "@shared/createVoteValidator";
 
 const PollContent: React.FC<{ id: string }> = ({ id }) => {
   const { data, isLoading } = trpc.useQuery(["poll.get-by-id", { id }]);
+
   const { mutate } = trpc.useMutation(["vote.create"]);
+
   const { register, handleSubmit } = useForm<createVoteFieldType>({ resolver: zodResolver(createVoteFieldValue) });
 
   const onSubmit = (data: createVoteFieldType) => {
@@ -29,22 +31,37 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
           <h2 className="text-slate-200 text-2xl font-medium mb-2">{data.question}</h2>
           <span className="text-slate-400">2 minutes ago</span>
         </div>
+
         <h4 className="text-slate-400 mb-6">Make a choice</h4>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          {(data?.options as { content: string }[]).map((option, index) => {
-            return (
-              <label key={index} htmlFor={`choice.${index}`}>
-                <input {...register("choice")} id={`choice.${index}`} type="radio" value={`${index}`} />
-                {option.content}
-              </label>
-            );
-          })}
+          <div className="flex flex-col -my-2">
+            {(data?.options as { content: string }[]).map((option, index) => {
+              return (
+                <label key={index} htmlFor={`choice.${index}`} className="cursor-pointer flex my-2 text-slate-200">
+                  <input
+                    {...register("choice")}
+                    id={`choice.${index}`}
+                    type="radio"
+                    value={`${index}`}
+                    className="w-5 h-5 inline-block text-pink-600 bg-slate-500 focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer mr-3 mt-[0.5px]"
+                  />
+                  {option.content}
+                </label>
+              );
+            })}
+          </div>
 
-          <button type="submit">Submit</button>
+          {data.isVoted ? (
+            <div className="py-4 px-5 my-6 bg-red-900 bg-opacity-60 text-red-100 text-sm rounded-md">
+              {"You already voted on this poll."}
+            </div>
+          ) : null}
+          <div>
+            <button type="submit">Submit</button>
+          </div>
         </form>
       </div>
-      {/* {data.isOwner ? <div className="text-red-500">You owned this</div> : null} */}
     </>
   );
 };

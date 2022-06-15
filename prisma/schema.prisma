@@ -29,5 +29,5 @@ model Vote {
   pollId     String
   voterToken String   @db.VarChar(255)
 
-  @@unique([pollId])
+  @@unique([pollId, voterToken])
 }

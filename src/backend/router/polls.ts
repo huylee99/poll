@@ -31,12 +31,37 @@ export const pollRouter = createRouter()
       id: z.string(),
     }),
     async resolve({ input, ctx }) {
-      const poll = await prisma.poll.findUnique({
+      const poll = await prisma.poll.findFirst({
         where: {
           id: input.id,
         },
       });
 
-      return { ...poll, isOwner: ctx.token === poll?.ownerToken };
+      const myVote = await prisma.vote.findFirst({
+        where: {
+          pollId: input.id,
+          voterToken: ctx.token,
+        },
+      });
+
+      return { ...poll, isOwner: ctx.token === poll?.ownerToken, isVoted: !!myVote, myVote };
+    },
+  })
+  .query("get-votes", {
+    input: z.object({
+      id: z.string(),
+    }),
+    async resolve({ input }) {
+      const votes = await prisma.vote.groupBy({
+        by: ["choice"],
+        where: {
+          pollId: input.id,
+        },
+        _count: {
+          choice: true,
+        },
+      });
+
+      return votes;
     },
   });
