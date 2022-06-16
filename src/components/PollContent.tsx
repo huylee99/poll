@@ -35,7 +35,7 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
         <h4 className="text-slate-400 mb-6">Make a choice</h4>
 
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col -my-2">
+          <div className="flex flex-col -my-2 mb-6">
             {(data?.options as { content: string }[]).map((option, index) => {
               return (
                 <label key={index} htmlFor={`choice.${index}`} className="cursor-pointer flex my-2 text-slate-200">
@@ -45,24 +45,23 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
                     type="radio"
                     value={`${index}`}
                     className="w-5 h-5 inline-block text-pink-600 bg-slate-500 focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer mr-3 mt-[0.5px]"
+                    disabled={data.isVoted}
+                    defaultChecked={data.myVote?.choice === index}
                   />
                   {option.content}
                 </label>
               );
             })}
           </div>
-          {data.isVoted ? (
-            <div className="py-4 px-5 my-6 bg-red-900 bg-opacity-60 text-red-100 text-sm rounded-md">
-              {"You already voted on this poll."}
-            </div>
-          ) : null}
+
           <div className="flex items-center -mx-2">
             <div className="flex-1 mx-2">
               <button
                 type="submit"
-                className="text-center w-full font-medium bg-pink-800 text-slate-200 py-3 rounded-md text-sm hover:bg-pink-700 transition-all"
+                className="text-center w-full font-medium bg-pink-800 text-slate-200 py-3 rounded-md text-sm hover:bg-pink-700 transition-all disabled:bg-opacity-80 disabled:pointer-events-none"
+                disabled={data.isVoted}
               >
-                Vote
+                {data.isVoted ? "You already voted on this poll." : "Vote"}
               </button>
             </div>
             <div className="flex-1 flex items-center">

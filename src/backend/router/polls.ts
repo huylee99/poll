@@ -62,6 +62,12 @@ export const pollRouter = createRouter()
         },
       });
 
-      return votes;
+      const poll = await prisma.poll.findFirst({
+        where: {
+          id: input.id,
+        },
+      });
+
+      return { poll, votes };
     },
   });
