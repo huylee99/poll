@@ -61,9 +61,7 @@ export const pollRouter = createRouter()
         where: {
           pollId: input.id,
         },
-        _count: {
-          choice: true,
-        },
+        _count: true,
       });
 
       const poll = await prisma.poll.findFirst({

@@ -22,7 +22,7 @@ const PollResults = ({ id }: PollResultsProps) => {
 
   const getTotal = () => {
     return data.votes.reduce((prev, curr) => {
-      return prev + curr._count.choice;
+      return prev + curr._count;
     }, 0);
   };
 
@@ -44,9 +44,9 @@ const PollResults = ({ id }: PollResultsProps) => {
             (data.poll.options as { content: string }[]).map((option, index) => (
               <div key={option.content} className="my-2">
                 <h4 className="text-slate-300 mb-2">
-                  {option.content} {`(${data.votes[index]?._count.choice || 0})`}
+                  {option.content} {`(${data.votes.find(vote => vote.choice === index)?._count || 0})`}
                 </h4>
-                <Range percentage={getPercentage(data.votes[index]?._count.choice || 0)} />
+                <Range percentage={getPercentage(data.votes.find(vote => vote.choice === index)?._count || 0)} />
               </div>
             ))}
         </div>
