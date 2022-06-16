@@ -3,7 +3,9 @@ import { nanoid } from "nanoid";
 
 export function middleware(req: NextRequest, ev: NextFetchEvent) {
   if (req.cookies["poll-user-token"]) {
-    return;
+    if (req.cookies["poll-user-token"] === req.ip) {
+      return;
+    }
   }
 
   const res = NextResponse.next();
