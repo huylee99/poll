@@ -16,7 +16,7 @@ const PollCard: React.FC<{ poll: Poll }> = ({ poll }) => {
         </Link>
       </div>
       <div>
-        <h2 className="text-slate-300 text-lg font-medium">What&apos;s my name?</h2>
+        <h2 className="text-slate-300 text-lg font-medium">{question}</h2>
       </div>
     </div>
   );

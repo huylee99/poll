@@ -3,8 +3,10 @@ import type { createPollType } from "src/shared/createPollValidator";
 import { XIcon } from "@heroicons/react/outline";
 import { useForm, useFieldArray } from "react-hook-form";
 import { NextPage } from "next";
-import PageTitle from "@components/PageTitle";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
+
+import PageTitle from "@components/PageTitle";
 import createPollValidator from "src/shared/createPollValidator";
 import { trpc } from "@utils/trpc";
 
@@ -28,16 +30,21 @@ const QuestionCreator: NextPage = () => {
     name: "options",
     control,
   });
+  const router = useRouter();
 
   const onSubmit = (data: createPollType) => {
     const { options, question } = data;
-
     mutate({ question, options });
   };
 
   const { mutate, isLoading } = trpc.useMutation("poll.create", {
-    onSuccess: () => {
+    onSuccess: data => {
+      if ("message" in data) {
+        return;
+      }
+
       reset();
+      router.push(`/poll/${data.id}`);
     },
   });
 
@@ -100,7 +107,8 @@ const QuestionCreator: NextPage = () => {
               <div className="text-right">
                 <button
                   type="submit"
-                  className="py-2 px-4 bg-pink-700 font-medium text-slate-300 rounded-md hover:bg-pink-600"
+                  className="py-2 px-4 bg-pink-700 font-medium text-slate-200 rounded-md hover:bg-pink-600 disabled:opacity-80 disabled:pointer-events-none"
+                  disabled={isLoading}
                 >
                   Create poll
                 </button>

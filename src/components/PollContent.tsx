@@ -41,7 +41,7 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
       <div className="w-full bg-slate-800 border-t-4 border-pink-600 rounded-md p-8">
         <div className="mb-8">
           <h2 className="text-slate-200 text-2xl font-medium mb-2">{data.question}</h2>
-          <span className="text-slate-400">2 minutes ago</span>
+          <span className="text-slate-400">69 minutes ago</span>
         </div>
 
         <h4 className="text-slate-400 mb-6">Make a choice</h4>

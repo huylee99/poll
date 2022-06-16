@@ -6,7 +6,11 @@ import createPollValidator from "src/shared/createPollValidator";
 export const pollRouter = createRouter()
   .query("get-all", {
     async resolve() {
-      const polls = await prisma.poll.findMany();
+      const polls = await prisma.poll.findMany({
+        orderBy: {
+          createdAt: "desc",
+        },
+      });
       return { polls };
     },
   })
