@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createVoteFieldValue } from "@shared/createVoteValidator";
 import PollDialog from "./Dialog";
 import SharePoll from "./SharePoll";
+import { SkeletonPollPage } from "./Skeleton";
 
 const PollContent: React.FC<{ id: string }> = ({ id }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -33,7 +34,7 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
   }
 
   if (queryLoading) {
-    return <div>Loading...</div>;
+    return <SkeletonPollPage />;
   }
 
   return (

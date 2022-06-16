@@ -1,8 +1,9 @@
 import { trpc } from "@utils/trpc";
-import { ChevronLeftIcon, ShareIcon } from "@heroicons/react/solid";
+import { ChevronLeftIcon } from "@heroicons/react/solid";
 import Range from "@components/Range";
 import Link from "next/link";
 import SharePoll from "@components/SharePoll";
+import { SkeletonPollPage } from "@components/Skeleton";
 
 type PollResultsProps = {
   id: string;
@@ -12,7 +13,7 @@ const PollResults = ({ id }: PollResultsProps) => {
   const { data, isLoading } = trpc.useQuery(["poll.get-votes", { id }]);
 
   if (isLoading) {
-    return <div>...Loading</div>;
+    return <SkeletonPollPage />;
   }
 
   if (!data && !isLoading) {

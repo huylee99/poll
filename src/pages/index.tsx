@@ -6,6 +6,8 @@ import PollCard from "@components/PollCard";
 import PageTitle from "@components/PageTitle";
 import { trpc } from "../utils/trpc";
 
+import { SkeletonPollCard } from "@components/Skeleton";
+
 const Home: NextPage = () => {
   const { data, isLoading } = trpc.useQuery(["poll.get-all"]);
 
@@ -27,7 +29,14 @@ const Home: NextPage = () => {
           </div>
 
           <div className="flex flex-col -my-3">
-            {!isLoading ? data?.polls.map(poll => <PollCard key={poll.id} poll={poll} />) : null}
+            {!isLoading ? (
+              data?.polls.map(poll => <PollCard key={poll.id} poll={poll} />)
+            ) : (
+              <>
+                <SkeletonPollCard />
+                <SkeletonPollCard />
+              </>
+            )}
           </div>
         </div>
       </main>

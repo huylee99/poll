@@ -32,3 +32,18 @@ body {
 .container {
   @apply max-w-5xl p-3 mx-auto;
 }
+
+.skeleton {
+  opacity: 0.7;
+  animation: loading-animation 1s linear infinite alternate;
+}
+
+@keyframes loading-animation {
+  0% {
+    background-color: hsla(197, 16%, 83%, 0.089);
+  }
+
+  100% {
+    background-color: hsla(204, 20%, 95%, 0.164);
+  }
+}
