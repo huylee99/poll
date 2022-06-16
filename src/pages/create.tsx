@@ -43,7 +43,6 @@ const QuestionCreator: NextPage = () => {
         return;
       }
 
-      reset();
       router.push(`/poll/${data.id}`);
     },
   });
