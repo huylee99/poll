@@ -72,7 +72,9 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
                 className="text-center w-full font-medium bg-pink-800 text-slate-200 py-3 rounded-md text-sm hover:bg-pink-700 transition-all disabled:bg-opacity-80 disabled:pointer-events-none"
                 disabled={data.isVoted}
               >
-                {data.isVoted ? "You already voted on this poll." : mutationLoading ? "Voting..." : "Vote"}
+                {data.isVoted && "You already voted on this poll."}
+                {!data.isVoted && !queryLoading && !mutationLoading && "Vote"}
+                {mutationLoading && "Voting..."}
               </button>
             </div>
             <div className="flex-1 flex items-center">

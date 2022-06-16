@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 import PollContent from "@components/PollContent";
 import PageTitle from "@components/PageTitle";
 
@@ -8,6 +9,10 @@ const Poll = () => {
 
   return (
     <div>
+      <Head>
+        <title>Poll</title>
+        <meta name="description" content="Poll" />
+      </Head>
       <main>
         <div className="container">
           <PageTitle title="Poll" />

@@ -43,7 +43,7 @@ const PollResults = ({ id }: PollResultsProps) => {
             (data.poll.options as { content: string }[]).map((option, index) => (
               <div key={option.content} className="my-2">
                 <h4 className="text-slate-300 mb-2">
-                  {option.content} {`(${data.votes[index]?._count.choice})`}
+                  {option.content} {`(${data.votes[index]?._count.choice || 0})`}
                 </h4>
                 <Range percentage={getPercentage(data.votes[index]?._count.choice || 0)} />
               </div>
