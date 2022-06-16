@@ -6,7 +6,7 @@ const PollCard: React.FC<{ poll: Poll }> = ({ poll }) => {
   const { id, question } = poll;
 
   return (
-    <div className="w-full bg-slate-800 p-5 rounded-md my-3">
+    <div className="w-full bg-slate-800 p-3 sm:p-5 rounded-md my-3">
       <div className="flex items-center mb-4">
         <PollStatus />
         <Link href={`/poll/${id}`} passHref>
