@@ -84,7 +84,7 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
                 </Link>
               </div>
               <div className="flex-1 mx-2">
-                <SharePoll shareUrl="http://localhost:3000/poll/cl4fl56cv0000n4vas7wvmjns" />
+                <SharePoll pollId={id} />
               </div>
             </div>
           </div>

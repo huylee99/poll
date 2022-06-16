@@ -2,6 +2,7 @@ import { trpc } from "@utils/trpc";
 import { ChevronLeftIcon, ShareIcon } from "@heroicons/react/solid";
 import Range from "@components/Range";
 import Link from "next/link";
+import SharePoll from "@components/SharePoll";
 
 type PollResultsProps = {
   id: string;
@@ -58,12 +59,7 @@ const PollResults = ({ id }: PollResultsProps) => {
             </Link>
           </div>
           <div className="flex-1 mx-2">
-            <button
-              type="button"
-              className="w-full text-sm rounded-md flex items-center justify-center bg-slate-700 py-3 text-slate-200 hover:bg-slate-600 transition-all"
-            >
-              <ShareIcon className="w-5 h-5 text-slate-300 mr-2" /> Share
-            </button>
+            <SharePoll pollId={id} />
           </div>
         </div>
       </div>

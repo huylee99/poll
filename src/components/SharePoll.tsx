@@ -4,12 +4,14 @@ import { ShareIcon, ClipboardCopyIcon } from "@heroicons/react/solid";
 import PollDialog from "./Dialog";
 
 type SharePollProps = {
-  shareUrl: string;
+  pollId: string;
 };
 
-const SharePoll = ({ shareUrl }: SharePollProps) => {
+const SharePoll = ({ pollId }: SharePollProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const shareUrl = (typeof window !== "undefined" && `${window.location.origin}/poll/${pollId}`) || "";
 
   const handleCopy: MouseEventHandler<HTMLButtonElement> = () => {
     copy(shareUrl);
@@ -40,6 +42,7 @@ const SharePoll = ({ shareUrl }: SharePollProps) => {
                 id="invite-link"
                 type="text"
                 readOnly
+                disabled
                 className="bg-slate-700 outline-none border-none w-full text-sm text-slate-400"
               />
             </div>
@@ -56,6 +59,10 @@ const SharePoll = ({ shareUrl }: SharePollProps) => {
           <button
             type="button"
             className="w-full text-center bg-slate-600 text-sm text-slate-300 font-medium py-2 rounded-md hover:bg-slate-700 transition-all"
+            onClick={() => {
+              setIsOpen(false);
+              setCopied(false);
+            }}
           >
             Close
           </button>
