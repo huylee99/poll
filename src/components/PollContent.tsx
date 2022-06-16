@@ -3,6 +3,7 @@ import { ChartBarIcon, ShareIcon } from "@heroicons/react/solid";
 import { trpc } from "@utils/trpc";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
 import { createVoteFieldValue } from "@shared/createVoteValidator";
 
 const PollContent: React.FC<{ id: string }> = ({ id }) => {
@@ -66,12 +67,11 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
             </div>
             <div className="flex-1 flex items-center">
               <div className="flex-1 mx-2">
-                <button
-                  type="button"
-                  className="w-full text-sm flex rounded-md items-center justify-center bg-slate-700 py-3 text-slate-200 hover:bg-slate-600 transition-all"
-                >
-                  <ChartBarIcon className="w-5 h-5 text-slate-300 mr-2" /> Results
-                </button>
+                <Link href={`/poll/${id}/results`} passHref>
+                  <a className="w-full text-sm flex rounded-md items-center justify-center bg-slate-700 py-3 text-slate-200 hover:bg-slate-600 transition-all">
+                    <ChartBarIcon className="w-5 h-5 text-slate-300 mr-2" /> Results
+                  </a>
+                </Link>
               </div>
               <div className="flex-1 mx-2">
                 <button

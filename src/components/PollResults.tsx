@@ -1,5 +1,7 @@
 import { trpc } from "@utils/trpc";
+import { ChevronLeftIcon, ShareIcon } from "@heroicons/react/solid";
 import Range from "@components/Range";
+import Link from "next/link";
 
 type PollResultsProps = {
   id: string;
@@ -35,7 +37,7 @@ const PollResults = ({ id }: PollResultsProps) => {
           <h2 className="text-slate-200 text-2xl font-medium mb-2">{data.poll?.question}</h2>
           <span className="text-slate-400">2 minutes ago</span>
         </div>
-        <div className="flex flex-col -my-2">
+        <div className="flex flex-col -my-2 mb-8">
           {!!data.poll &&
             (data.poll.options as { content: string }[]).map((option, index) => (
               <div key={option.content} className="my-2">
@@ -45,6 +47,24 @@ const PollResults = ({ id }: PollResultsProps) => {
                 <Range percentage={getPercentage(data.votes[index]?._count.choice || 0)} />
               </div>
             ))}
+        </div>
+
+        <div className="flex items-center -mx-2">
+          <div className="flex-1 mx-2">
+            <Link href={`/poll/${id}`} passHref>
+              <a className="w-full text-sm flex rounded-md items-center justify-center bg-slate-700 py-3 text-slate-200 hover:bg-slate-600 transition-all">
+                <ChevronLeftIcon className="w-5 h-5 text-slate-300 mr-2" /> Back to poll
+              </a>
+            </Link>
+          </div>
+          <div className="flex-1 mx-2">
+            <button
+              type="button"
+              className="w-full text-sm rounded-md flex items-center justify-center bg-slate-700 py-3 text-slate-200 hover:bg-slate-600 transition-all"
+            >
+              <ShareIcon className="w-5 h-5 text-slate-300 mr-2" /> Share
+            </button>
+          </div>
         </div>
       </div>
     </>
