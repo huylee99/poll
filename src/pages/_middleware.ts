@@ -8,7 +8,7 @@ export function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   const res = NextResponse.next();
 
-  res.cookie("poll-user-token", nanoid(), {
+  res.cookie("poll-user-token", req.ip || nanoid(), {
     sameSite: "strict",
   });
 
