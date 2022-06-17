@@ -18,7 +18,6 @@ const QuestionCreator: NextPage = () => {
     handleSubmit,
     control,
     formState: { errors },
-    setValue,
   } = useForm<createPollType>({
     resolver: zodResolver(createPollValidator),
     defaultValues: {
@@ -34,9 +33,7 @@ const QuestionCreator: NextPage = () => {
   const router = useRouter();
 
   const onSubmit = (data: createPollType) => {
-    const { options, question, endAt } = data;
-    // mutate({ question, options, endAt });
-    console.log(data);
+    mutate(data);
   };
 
   const { mutate, isLoading } = trpc.useMutation("poll.create", {
