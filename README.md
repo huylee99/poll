@@ -1,4 +1,4 @@
 - Todo
 
-[ ] - User can select the length of poll
-[ ] - Change tRPC to SSR
+[] - User can select the length of poll
+[x] - Change tRPC to SSR
