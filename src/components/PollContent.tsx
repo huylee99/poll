@@ -37,6 +37,8 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
     return <SkeletonPollPage />;
   }
 
+  const isExpired = !!data.endsAt && new Date(data.endsAt) <= new Date(Date.now());
+
   return (
     <>
       <div className="w-full bg-slate-800 border-t-4 border-pink-600 rounded-md p-4 sm:p-8">
@@ -62,7 +64,7 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
                     type="radio"
                     value={`${index}`}
                     className="w-5 h-5 inline-block text-pink-600 bg-slate-500 focus:ring-0 focus:ring-offset-0 focus:outline-none cursor-pointer mr-3 mt-[0.5px]"
-                    disabled={data.isVoted || mutationLoading}
+                    disabled={data.isVoted || mutationLoading || isExpired}
                     defaultChecked={data.myVote?.choice === index}
                   />
                   {option.content}
@@ -78,8 +80,9 @@ const PollContent: React.FC<{ id: string }> = ({ id }) => {
                 disabled={data.isVoted}
               >
                 {data.isVoted && "You already voted on this poll."}
-                {!data.isVoted && !queryLoading && !mutationLoading && "Vote"}
+                {!data.isVoted && !queryLoading && !mutationLoading && !isExpired && "Vote"}
                 {mutationLoading && "Voting..."}
+                {isExpired && "Poll is expired."}
               </button>
             </div>
             <div className="flex-1 flex-col flex sm:items-center sm:flex-row">

@@ -1,7 +1,7 @@
 import type { createPollType } from "src/shared/createPollValidator";
 
 import { XIcon } from "@heroicons/react/outline";
-import { useForm, useFieldArray, useFormState } from "react-hook-form";
+import { useForm, useFieldArray } from "react-hook-form";
 import { NextPage } from "next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
