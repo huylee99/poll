@@ -1,7 +1,7 @@
 import type { createPollType } from "src/shared/createPollValidator";
 
 import { XIcon } from "@heroicons/react/outline";
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, useFormState } from "react-hook-form";
 import { NextPage } from "next";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
@@ -18,6 +18,7 @@ const QuestionCreator: NextPage = () => {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm<createPollType>({
     resolver: zodResolver(createPollValidator),
     defaultValues: {
@@ -34,7 +35,8 @@ const QuestionCreator: NextPage = () => {
 
   const onSubmit = (data: createPollType) => {
     const { options, question, endAt } = data;
-    mutate({ question, options, endAt });
+    // mutate({ question, options, endAt });
+    console.log(data);
   };
 
   const { mutate, isLoading } = trpc.useMutation("poll.create", {
