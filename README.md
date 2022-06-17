@@ -1,4 +1,8 @@
-- Todo
+# Thanks to Theo for awesome stack and project!
 
-[] - User can select the length of poll
-[x] - Change tRPC to SSR
+### TODO
+
+# https://www.youtube.com/c/TheoBrowne1017
+
+- [ ] User can control poll length
+- [x] use tRPC SSR

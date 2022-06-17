@@ -18,7 +18,6 @@ const QuestionCreator: NextPage = () => {
     handleSubmit,
     control,
     formState: { errors },
-    reset,
   } = useForm<createPollType>({
     resolver: zodResolver(createPollValidator),
     defaultValues: {
