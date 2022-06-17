@@ -6,6 +6,7 @@ const createPollValidator = z.object({
     .array(z.object({ content: z.string().min(1).max(1000) }))
     .min(2)
     .max(10),
+  endAt: z.string().optional(),
 });
 
 export type createPollType = z.infer<typeof createPollValidator>;
