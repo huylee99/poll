@@ -14,6 +14,7 @@ export default withTRPC<AppRouter>({
      * If you want to use SSR, you need to use the server's full URL
      * @link https://trpc.io/docs/ssr
      */
+    ctx?.req?.headers;
     const url = `/api/trpc`;
 
     return {
@@ -23,6 +24,7 @@ export default withTRPC<AppRouter>({
        */
       // queryClientConfig: { defaultOptions: { queries: { staleTime: 60 } } },
       transformer: superjson,
+      headers: {},
     };
   },
   /**
