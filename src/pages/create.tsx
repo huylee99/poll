@@ -23,6 +23,7 @@ const QuestionCreator: NextPage = () => {
     defaultValues: {
       question: "",
       options: [],
+      endAt: "",
     },
   });
   const { fields, append, remove } = useFieldArray<createPollType>({
@@ -32,8 +33,7 @@ const QuestionCreator: NextPage = () => {
   const router = useRouter();
 
   const onSubmit = (data: createPollType) => {
-    const { options, question } = data;
-    mutate({ question, options });
+    mutate(data);
   };
 
   const { mutate, isLoading } = trpc.useMutation("poll.create", {
@@ -69,36 +69,49 @@ const QuestionCreator: NextPage = () => {
                 />
               </div>
 
-              <label className="inline-block text-slate-300 font-medium mb-2">Options</label>
-              <div className="flex flex-col -my-1 mb-4">
-                {fields.map((field, index) => {
-                  return (
-                    <div key={field.id} className="flex items-center relative my-1">
-                      <input
-                        placeholder={`Option ${index + 1}`}
-                        {...register(`options.${index}.content`, {
-                          required: true,
-                        })}
-                        className="w-full py-3 px-4 pr-10 bg-slate-700 text-slate-400 rounded-md focus:ring-1 focus:ring-pink-500 focus:outline-none"
-                      />
+              <div className="mb-4">
+                <label className="inline-block text-slate-300 font-medium mb-2">Options</label>
+                <div className="flex flex-col -my-1 mb-4">
+                  {fields.map((field, index) => {
+                    return (
+                      <div key={field.id} className="flex items-center relative my-1">
+                        <input
+                          placeholder={`Option ${index + 1}`}
+                          {...register(`options.${index}.content`, {
+                            required: true,
+                          })}
+                          className="w-full py-3 px-4 pr-10 bg-slate-700 text-slate-400 rounded-md focus:ring-1 focus:ring-pink-500 focus:outline-none"
+                        />
 
-                      <XIcon
-                        onClick={() => remove(index)}
-                        className="ml-auto absolute right-2 w-6 h-6 text-slate-400"
-                        role="button"
-                      />
-                    </div>
-                  );
-                })}
+                        <XIcon
+                          onClick={() => remove(index)}
+                          className="ml-auto absolute right-2 w-6 h-6 text-slate-400"
+                          role="button"
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
 
               <button
                 type="button"
                 onClick={() => append({ content: "" })}
-                className="py-2 px-4 bg-slate-700 font-medium text-slate-300 rounded-md hover:bg-slate-600"
+                className="py-2 px-4 bg-slate-700 font-medium text-slate-300 rounded-md hover:bg-slate-600 mb-4"
               >
                 Add option
               </button>
+
+              <div>
+                <label htmlFor="endAt" className="inline-block text-slate-300 font-medium mb-2">
+                  End date {`(optional)`}
+                </label>
+                <input
+                  type={"datetime-local"}
+                  {...register("endAt")}
+                  className="w-full p-3 bg-slate-700 text-slate-400 rounded-md focus:ring-1 focus:ring-pink-500 focus:outline-none"
+                />
+              </div>
 
               <div className="my-4 h-[0.5px] bg-slate-600"></div>
 

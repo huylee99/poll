@@ -19,11 +19,14 @@ export const pollRouter = createRouter()
     async resolve({ input, ctx }) {
       if (!ctx.token) return { message: "Unauthorized" };
 
+      const endsAt = !!input.endAt ? new Date(input.endAt) : null;
+
       const poll = await prisma.poll.create({
         data: {
           question: input.question,
           ownerToken: ctx.token,
           options: input.options,
+          endsAt: endsAt,
         },
       });
 
